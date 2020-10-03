@@ -4,11 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Manejo y transformación de errores con NodeJS</title>
-    <meta name="description" content="Presentación de Manejo y Transformación de errores con NodeJS">
-
-    <!-- URL CANONICAL -->
-    <!-- <link rel="canonical" href="http://your-url.com/permalink"> -->
+    <title>Manejo y transformación de errores en NodeJS</title>
+    <meta name="description" content="Presentación de Manejo y Transformación de errores en NodeJS">
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,700,700i%7CMaitree:200,300,400,600,700&amp;subset=latin-ext" rel="stylesheet">
@@ -18,33 +15,9 @@
 
     <!-- Optional - CSS SVG Icons (Font Awesome) -->
     <link rel="stylesheet" type="text/css" media="all" href="static/css/svg-icons.css">
-
-    <!-- SOCIAL CARDS (ADD YOUR INFO) -->
-
-    <!-- FACEBOOK -->
-    <meta property="og:url" content="http://your-url.com/permalink"> <!-- EDIT -->
-    <meta property="og:type" content="article">
-    <meta property="og:title" content="Make a Keynote presentation using HTML"> <!-- EDIT -->
-    <meta property="og:description" content="WebSlides is the easiest way to make HTML presentations. 120+ free slides ready to use."> <!-- EDIT -->
-    <meta property="og:updated_time" content="2017-01-04T17:32:14"> <!-- EDIT -->
-    <meta property="og:image" content="static/images/share-webslides.jpg" > <!-- EDIT -->
-
-    <!-- TWITTER -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@webslides"> <!-- EDIT -->
-    <meta name="twitter:creator" content="@jlantunez"> <!-- EDIT -->
-    <meta name="twitter:title" content="Make a Keynote presentation using HTML"> <!-- EDIT -->
-    <meta name="twitter:description" content="WebSlides is the easiest way to make HTML presentations. 120+ free slides ready to use."> <!-- EDIT -->
-    <meta name="twitter:image" content="static/images/share-webslides.jpg"> <!-- EDIT -->
-
-    <!-- FAVICONS -->
-    <link rel="shortcut icon" sizes="16x16" href="static/images/favicons/favicon.png">
-    <link rel="shortcut icon" sizes="32x32" href="static/images/favicons/favicon-32.png">
-    <link rel="apple-touch-icon icon" sizes="76x76" href="static/images/favicons/favicon-76.png">
-    <link rel="apple-touch-icon icon" sizes="120x120" href="static/images/favicons/favicon-120.png">
-    <link rel="apple-touch-icon icon" sizes="152x152" href="static/images/favicons/favicon-152.png">
-    <link rel="apple-touch-icon icon" sizes="180x180" href="static/images/favicons/favicon-180.png">
-    <link rel="apple-touch-icon icon" sizes="192x192" href="static/images/favicons/favicon-192.png">
+    <link rel="stylesheet" href="static/css/styles/default.css">
+    <script src="static/js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
 
     <!-- Android -->
     <meta name="mobile-web-app-capable" content="yes">
@@ -83,62 +56,492 @@
         </section>
 
         <!-- Introduccion -->
-
-        <!-- 1.1 Errores y Excepciones -->
         <section>
           <div class="wrap">
             <div class="grid vertical-align">
               <div class="column">
-                <h3><strong>Errores en NodeJS (Javascript)</strong></h3>
-                <p class="text-intro">
-                  Each parent <code>&lt;section&gt;</code> in the #webslides element is an individual slide.
-                </p>
-                <p>
-                  Code is neat, scalable, and well documented. It uses <strong>intuitive markup with popular naming conventions</strong>. There's no need to overuse classes or nesting. <strong>Based on <a href="https://github.com/jennschiffer/SimpleSlides">SimpleSlides</a>, by <a href="http://jennmoney.biz">Jenn Schiffer</a></strong> :)
-                </p>
+                <h3><strong>Erase una vez...</strong></h3>
               </div>
               <div class="column">
+                <img src="static/images/cat-typing.gif" />
               </div>
             </div>
           </div>
         </section>
 
-        <!-- 1.2 Extendiendo la clase Error (ES6) -->
         <section>
           <div class="wrap">
+            <h3><strong>Pero...</strong></h3>
+            <div class="grid vertical-align">
+              <div class="column">
+                <img src="static/images/javascript-stacktrace-1.png" />
+              </div>
+              <div class="column">
+                <img src="static/images/cat-cry.png" />
+              </div>
+            </div>
+          </div>
+        </section>
 
+        <section>
+          <div class="wrap">
+            <h3><strong>También...</strong></h3>
+            <div class="grid vertical-align">
+              <div class="column">
+                <img src="static/images/hold-a-teacup.png" />
+              </div>
+              <div class="column">
+                <img src="static/images/user-bad-tea.png" />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div class="wrap">
+            <h3><strong>Y en otros casos...</strong></h3>
+            <div class="grid vertical-align">
+              <div class="column">
+                <img src="static/images/system-architecture.png" />
+              </div>
+              <div class="column">
+                <img src="static/images/chrome.jpg" />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 1.2 Manejo de errores (try/catch) -->
+        <section>
+          <div class="wrap">
+            <h3><strong>Usando try/catch</strong></h3>
+            <div class="grid vertical-align">
+              <div class="column">
+                <pre>
+                  <code class="javascript">
+try {
+  console.log(item.length);
+} catch(e) {
+  console.log("ERROR: " + e.message);
+}
+// imprime: ERROR: item is not defined
+                  </code>
+                </pre>
+              </div>
+              <div class="column">
+                <pre>
+                  <code class="javascript">function f(item) {
+  try {
+    var len = item.length;
+    try {
+      return item.split(' ');
+    } catch(e) {
+      console.log("ERROR: item no es un array");
+    }
+  } catch(e) {
+    console.log("ERROR: " + e.message);
+  }
+}
+f(2);
+// ERROR: item no es un array</code>
+                </pre>
+              </div>
+            </div>
           </div>
         </section>
 
         <!-- 2.1 Funciones como Ciudadanos de primera categoria -->
+        <section>
+          <div class="wrap">
+            <h3><strong>Funciones como <em>"First class citizens"</em> 1/3</strong></h3>
+            <div class="grid vertical-align">
+              <div class="column">
+                <pre>
+                  <code class="javascript">function esNumeroPar(num) {
+  return num % 2 === 0;
+}
 
-        <!-- 2.2 Funciones de orden superior (High order functions) -->
+var listado = [1,4,8,51,90,101];
+console.log(listado.filter(esNumeroPar));
+// filter es una función de orden superior (high order function)
+
+// imprime: [4, 8, 90]</code>
+                </pre>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div class="wrap">
+            <h3><strong>Funciones como <em>"First class citizens"</em> 2/3</strong></h3>
+            <div class="grid vertical-align">
+              <div class="column">
+                <pre>
+                  <code class="javascript">function esNumeroPar(num) {
+  return num % 2 === 0;
+}
+function esMultiplo3(num) {
+  return num % 3 === 0;
+}
+function esMultiplo4(num) {
+  return num % 4 === 0;
+}
+...
+</code>
+                </pre>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div class="wrap">
+            <h3><strong>Funciones como <em>"First class citizens"</em> 3/3</strong></h3>
+            <div class="grid vertical-align">
+              <div class="column">
+                <pre>
+                  <code class="javascript">function esMultiploDe(divisor) {
+  return function multiplo(num) {
+    return num % divisor === 0;
+  };
+}
+
+var listado = [1,4,8,51,90,101];
+console.log(listado.filter(esMultiploDe(2))); // [4, 8, 90]
+console.log(listado.filter(esMultiploDe(3))); // [51, 90]
+console.log(listado.filter(esMultiploDe(4))); // [4, 8]</code>
+                </pre>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 1.3 Extendiendo la clase Error (ES6) -->
+        <section>
+          <div class="wrap">
+            <h3><strong>La clase Error de NodeJS</strong></h3>
+            <div class="grid vertical-align">
+              <div class="column">
+                Todos los errores en NodeJS extienden de la clase <strong>Error</strong>
+                <p>
+                  <ul>
+                    <li>- TypeError</li>
+                    <li>- ReferenceError</li>
+                    <li>- SyntaxError</li>
+                    <li>- ...</li>
+                  </ul>
+                </p>
+              </div>
+              <div class="column">
+                <pre>
+                  <code class="javascript">class ApiError extends Error {
+  constructor(message, status) {
+    super(message);
+    this.status = status;
+  }
+}
+class ValidationError extends ApiError {
+  constructor(message, fieldErrors) {
+    super(message, 412);
+    this.fieldErrors = fieldErrors;
+  }
+}</code>
+                </pre>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 1.4 Ejemplo con throw -->
+        <section>
+          <div class="wrap">
+            <h3><strong>Ventaja de Extender clases</strong></h3>
+            <div class="grid vertical-align">
+              <div class="column">
+                <pre>
+                  <code class="javascript">function validarUsuario(datosUsuario) {
+  // ...
+  throw new ValidationError("Error al validar el usuario", []);
+}
+try {
+  validarUsuario({ nombre: 'Felix' });
+} catch(e) {
+  console.log(e instanceof ValidationError); // true
+  console.log(e instanceof ApiError); // true
+}</code>
+                </pre>
+              </div>
+            </div>
+          </div>
+        </section>
 
         <!-- 3.1 Propagando errores (async/await y promesas) -->
+        <section class="slide-top">
+          <div class="wrap">
+            <h3><strong>Propagando errores</strong></h3>
+            <div class="grid vertical-align">
+              <div class="column">
+                <pre>
+                  <code class="javascript">function validarUsuario(datosUsuario) {
+  return metodoAsincrono(datosUsuario)
+  .then((usuario) => {
+    throw new ValidationError('Rol', {
+      nombre: datosUsuario.rol,
+    });
+  });
+}
+function registrarUsuario(datosUsuario) {
+  return validarUsuario(datosUsuario)
+  .catch((e) => {
+    if (e instanceof ValidationError) {
+      console.log(
+        e.constructor.name,
+        e.fieldErrors
+      );
+    } else {
+      console.log(e);
+    }
+  });
+}
+registrarUsuario({});
+// ValidationError { nombre: undefined }</code>
+                </pre>
+              </div>
+              <div class="column">
+                <pre>
+                  <code class="javascript">async function validarUsuario(datosUsuario) {
+  try {
+    const usuario = await metodoAsincrono(datosUsuario);
+    throw new ValidationError('Rol', {
+      nombre: datosUsuario.rol,
+    });
+  } catch(error) { throw error; }
+}
+async function registrarUsuario(datosUsuario) {
+  try {
+    validarUsuario(datosUsuario);
+  } catch(e) {
+    if (e instanceof ValidationError)
+      console.log(
+        e.constructor.name,
+        e.fieldErrors
+      );
+    else console.log(e);
+  });
+}
+registrarUsuario({});
+// ValidationError { nombre: undefined }</code>
+                </pre>
+              </div>
+            </div>
+          </div>
+        </section>
 
         <!-- 3.2 Transformando errores (async/await y promesas) -->
+        <section class="slide-top">
+          <div class="wrap">
+            <h3><strong>Transformando errores 1/3</strong></h3>
+            <div class="grid vertical-align">
+              <div class="column">
+                <pre>
+                  <code class="javascript">function validarUsuario(datosUsuario) {
+  return buscarRol(datosUsuario.rol)
+  .catch((e) => { // si falla la ejecución
+    if (e instanceof DatabaseError) {
+      throw new NotFoundError('Rol', {
+        nombre: datosUsuario.rol,
+      });
+    }
+    throw e;
+  });
+}
+function registrarUsuario(datosUsuario) {
+  return validarUsuario(datosUsuario)
+  .catch((e) => {
+    if (e instanceof NotFoundError) {
+      return null;
+    }
+    throw e;
+  });
+}
+registrarUsuario({});
+// null</code>
+                </pre>
+              </div>
+              <div class="column">
+                <pre>
+                  <code class="javascript">async function validarUsuario(datosUsuario) {
+  try {
+    await buscarRol(datosUsuario.rol);
+  } catch(error) {
+    if (e instanceof DatabaseError) {
+      throw new NotFoundError('Rol', {
+        nombre: datosUsuario.rol,
+      });
+    }
+    throw e;
+  }
+}
+async function registrarUsuario(datosUsuario) {
+  try {
+    validarUsuario(datosUsuario);
+  } catch(e) {
+    if (e instanceof NotFoundError) {
+      return null;
+    }
+    throw e;
+  });
+}
+registrarUsuario({});
+// null</code>
+                </pre>
+              </div>
+            </div>
+          </div>
+        </section>
 
-        <!-- 4. Agregando un manejador de errores -->
-        <!-- 4.1 Manejador de errores -->
-        <!-- 4.2 Ejemplo Basico Promesas -->
-        <!-- 4.3 Ejemplo ExpressJS -->
-        <!-- 4.4 Ejemplo Koa -->
+        <section class="slide-top">
+          <div class="wrap">
+            <h3><strong>Transformando errores 2/3 (agregando manejadores)</strong></h3>
+            <div class="grid vertical-align">
+              <div class="column">
+                <pre>
+                  <code class="javascript">function handleDatabaseError(callback) {
+  return function handler(err) {
+    if (err instanceof DatabaseError) {
+      if (typeof callback === 'function') {
+        return callback(err);
+      }
+      return callback;
+    }
+  };
+}
+function handleNotFoundError(callback) {
+  return function handler(err) {
+    if (err instanceof NotFoundError) {
+      if (typeof callback === 'function') {
+        return callback(err);
+      }
+      return callback;
+    }
+  };
+}</code>
+                </pre>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide-top">
+          <div class="wrap">
+            <h3><strong>Transformando errores 3/3</strong></h3>
+            <div class="grid vertical-align">
+              <div class="column">
+                <pre>
+                  <code class="javascript">function validarUsuario(datosUsuario) {
+  return buscarRol(datosUsuario.rol)
+  .catch(
+    handleDatabaseError((e) => {
+      throw new NotFoundError('Rol', {
+        nombre: datosUsuario.rol,
+      })
+    })
+  );
+}
+function registrarUsuario(datosUsuario) {
+  return validarUsuario(datosUsuario)
+  .catch(handleNotFoundError(null));
+}
+registrarUsuario({});
+// null</code>
+                </pre>
+              </div>
+              <div class="column">
+                <pre>
+                  <code class="javascript">function validarUsuario(datosUsuario) {
+  try {
+    return buscarRol(datosUsuario.rol);
+  } catch(e) {
+    return handleDatabaseError((e2) => {
+      throw new NotFoundError('Rol', {
+        nombre: datosUsuario.rol,
+      })
+    });
+  }
+}
+function registrarUsuario(datosUsuario) {
+  try {
+    return validarUsuario(datosUsuario);
+  } catch(e) {
+    return handleNotFoundError(null)(e);
+  }
+}
+registrarUsuario({});
+// null</code>
+                </pre>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide-top">
+          <div class="wrap">
+            <h3><strong>Ejemplo 1:</strong></h3>
+            <div class="">
+              <pre>
+                <code class="javascript">return usuarioService.verificarContrasena({
+  usuario: params.usuario,
+  contrasena: encrypt(params.contrasena),
+}) // si es exitoso retorna el usuario
+.catch(NotFoundError.handle(null))
+.then((usuario) => {
+  // guarda el log de registro
+  return registroService.guardarIngreso(params.usuario)
+  .catch(ValidationError.handle(() => {
+    throw new NotFoundError('Usuario', [{ field: 'usuario', code: 'invalid' }]);
+  }))
+  .then(() => {
+    return usuario;
+  });
+});</code>
+              </pre>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide-top">
+          <div class="wrap">
+            <h3><strong>Ejemplo 2:</strong></h3>
+            <div class="content-center">
+              <p>
+                <a href="https://github.com/nardhar/node-backend-skel/">https://github.com/nardhar/node-backend-skel/</a>
+              </p>
+            </div>
+          </div>
+        </section>
 
         <!-- 5 Gracias -->
         <section class="aligncenter">
           <h3><strong>¡Gracias!</strong></h3>
           <hr>
           <p>
-            <svg class="fa-twitter">
-              <use xlink:href="#fa-twitter"></use>
+            <svg class="fa-link">
+              <use xlink:href="#fa-link"></use>
             </svg>
-            <strong>Twitter</strong> <a href="https://twitter.com/nardharmure" title="Twitter account">@nardharmure</a>
+            <a href="https://github.com/nardhar/presentation-error-handling-nodejs" title="Github link">https://github.com/nardhar/presentation-error-handling-nodejs</a>
           </p>
           <p>
             <svg class="fa-github">
               <use xlink:href="#fa-github"></use>
             </svg>
             <strong>Github</strong> <a href="https://github.com/nardhar" title="Github account">@nardhar</a>
+          </p>
+          <p>
+            <svg class="fa-twitter">
+              <use xlink:href="#fa-twitter"></use>
+            </svg>
+            <strong>Twitter</strong> <a href="https://twitter.com/nardharmure" title="Twitter account">@nardharmure</a>
           </p>
         </section>
       </article>
